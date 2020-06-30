@@ -20,7 +20,7 @@ spec:
         name: influxdb
         env:
           - name: INFLUXDB_GRAPHITE_ENABLED
-            value: true
+            value: "true"
         ports:
         - containerPort: 8086
           name: http
