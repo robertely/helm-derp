@@ -1,0 +1,15 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: influxdb
+  namespace: influx
+  labels:
+    app: influxdb
+spec:
+  rules:
+  - host: influx.k3s.8n1.sh
+    http:
+      paths:
+      - backend:
+          serviceName: influxdb
+          servicePort: 8888

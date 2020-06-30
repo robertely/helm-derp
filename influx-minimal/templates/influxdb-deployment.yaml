@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: influxdb-minimal
+  namespace: influx
+  labels:
+    app: influxdb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: influxdb
+  template:
+    metadata:
+      labels:
+        app: influxdb
+    spec:
+      containers:
+      - image: influxdb:latest
+        name: influxdb
+        env:
+          - name: INFLUXDB_GRAPHITE_ENABLED
+            value: true
+        ports:
+        - containerPort: 8086
+          name: http
+        - containerPort: 2003
+          hostPort: 2003

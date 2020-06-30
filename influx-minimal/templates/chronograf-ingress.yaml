@@ -1,0 +1,15 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: chronograf
+  namespace: influx
+  labels:
+    app: chronograf
+spec:
+  rules:
+  - host: chrono.k3s.8n1.sh
+    http:
+      paths:
+      - backend:
+          serviceName: chronograf
+          servicePort: 8888

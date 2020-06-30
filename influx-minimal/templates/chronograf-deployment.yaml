@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: chronograf
+  namespace: influx
+  labels:
+    app: chronograf
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: chronograf
+  template:
+    metadata:
+      labels:
+        app: chronograf
+    spec:
+      containers:
+      - image: chronograf:latest
+        name: chronograf
+        args:
+          - "--influxdb-url=http://influxdb:8086"
+        ports:
+        - containerPort: 8888
+          name: http
