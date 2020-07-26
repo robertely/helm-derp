@@ -21,8 +21,18 @@ spec:
         env:
           - name: INFLUXDB_GRAPHITE_ENABLED
             value: "true"
+          - name: INFLUXDB_DB
+            value: "iot"
         ports:
-        - containerPort: 8086
-          name: http
-        - containerPort: 2003
-          hostPort: 2003
+          - containerPort: 8086
+            name: http
+          - containerPort: 2003
+            hostPort: 2003
+        volumeMounts:
+          - mountPath: /var/lib/influxdb
+            name: kubedata
+      volumes:
+        - name: kubedata
+          hostPath:
+            path: /data/KubeData/influxdb
+            type: DirectoryOrCreate

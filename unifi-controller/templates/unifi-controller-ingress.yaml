@@ -1,0 +1,14 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: unifi-controller
+  labels:
+    app: unifi-controller
+spec:
+  rules:
+  - host: unifi.k3s.8n1.sh
+    http:
+      paths:
+      - backend:
+          serviceName: unifi-controller
+          servicePort: 8443

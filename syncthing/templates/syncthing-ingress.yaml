@@ -1,0 +1,15 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: syncthing
+  namespace: syncthing
+  labels:
+    app: syncthing
+spec:
+  rules:
+  - host: syncthing.k3s.8n1.sh
+    http:
+      paths:
+      - backend:
+          serviceName: syncthing
+          servicePort: 8384

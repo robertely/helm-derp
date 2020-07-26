@@ -1,0 +1,55 @@
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: syncthing
+  namespace: syncthing
+  labels:
+    app: syncthing
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: syncthing
+  template:
+    metadata:
+      labels:
+        app: syncthing
+    spec:
+      hostNetwork: true
+      containers:
+        - image: linuxserver/syncthing:latest
+          name: syncthing
+          env:
+            - name: "TZ"
+              value: "US/Mountain"
+            - name: "PUID"
+              value: "1000"
+            - name: "PGID"
+              value: "1000"
+            - name: "UMASK_SET"
+              value: "022"
+          ports:
+            - containerPort: 8384
+              name: http
+            - containerPort: 22000
+              hostPort: 22000
+              name: transfer
+            - containerPort: 21027
+              hostPort: 21027
+              name: discovery
+              protocol: UDP  
+          volumeMounts:
+            - mountPath: /data
+              name: titan
+            - mountPath: /config
+              name: config
+      volumes:
+        - name: titan
+          hostPath:
+            path: /data/
+            type: Directory
+        - name: config
+          hostPath:
+            path: /data/KubeConfig/syncthing
+            type: DirectoryOrCreate
